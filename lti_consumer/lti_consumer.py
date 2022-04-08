@@ -586,7 +586,8 @@ class LtiConsumerXBlock(StudioEditableXBlockMixin, XBlock):
 
         The scheme logic is handled in lms/lib/xblock/runtime.py
         """
-        return self.runtime.handler_url(self, "outcome_service_handler", thirdparty=True).rstrip('/?')
+        return self.runtime.handler_url(self, "outcome_service_handler", thirdparty=True).rstrip('/?').replace('http://', 'https://')
+        # return self.runtime.handler_url(self, "outcome_service_handler", thirdparty=True).rstrip('/?')
 
     @property
     def result_service_url(self):
@@ -913,4 +914,4 @@ class LtiConsumerXBlock(StudioEditableXBlockMixin, XBlock):
             'grade_handler': 'outcome_service_url',
             'lti_2_0_result_rest_handler': 'result_service_url'
         }
-        return getattr(self, mapping[service_name])
+        return getattr(self, mapping[service_name]).replace('http://', 'https://')
